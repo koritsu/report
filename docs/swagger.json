@@ -1,0 +1,170 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Rest API server written by GO",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/create": {
+            "post": {
+                "description": "file로 binary 파일을 받고, name이 있을 경우 name을 파일명으로, 없을 경우 file의 file명을 테이블에 저장한다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "파일을 기반으로 레코드를 생성한다.",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "content file (100MB 초과 불가)",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "파일명",
+                        "name": "name",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/delete/{id}": {
+            "delete": {
+                "description": "삭제한다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "path id로 레코드를 삭제한다.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "content Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/read/{id}": {
+            "get": {
+                "description": "아이디, 파일명, 생성일시를 제공한다",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "path id로 데이터를 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "content Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.GetContentResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/read/{id}/file": {
+            "get": {
+                "description": "id의 content를 파일로 다운로드 한다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "path id로 파일 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "content Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.GetContentResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/update/{id}": {
+            "put": {
+                "description": "파일과 name을 수정한다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "path id로 수정한다.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "content Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "content file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "파일명",
+                        "name": "name",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "vo.GetContentResponse": {
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

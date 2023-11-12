@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    container_name: restapi-go-local
+    image: restapi-go:local
+    user: root
+    ports:
+      - 8080:8080
+    restart: always
